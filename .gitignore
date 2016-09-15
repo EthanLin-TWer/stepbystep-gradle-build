@@ -1,5 +1,6 @@
 # Gradle build 
-build 
+build
+.gradle
 
 # Intellij files
 *.ipr
