@@ -1,0 +1,8 @@
+# Gradle build 
+build 
+
+# Intellij files
+*.ipr
+*.iws
+*.iml
+.idea
