@@ -10,5 +10,5 @@ public interface TodoService {
     Optional<TodoItem> findById(int id);
     TodoItem add(TodoItem todo);
     void delete(TodoItem todoItem);
-    void update(TodoItem todoItem);
+    TodoItem update(TodoItem todoItem);
 }

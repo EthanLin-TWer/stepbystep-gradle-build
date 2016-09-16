@@ -31,10 +31,11 @@ public class InMemoryTodoService implements TodoService{
     }
 
     @Override
-    public void update(TodoItem todoItem) {
+    public TodoItem update(TodoItem todoItem) {
         Optional<TodoItem> itemWithSameId = this.todoList.stream().filter(todo -> todo.getId() == todoItem.getId()).findFirst();
         if (itemWithSameId.isPresent()) {
-            itemWithSameId.get().setName(todoItem.getName()).setCompleted(todoItem.isCompleted());
+            return itemWithSameId.get().setName(todoItem.getName()).setCompleted(todoItem.isCompleted());
         }
+        return todoItem;
     }
 }
