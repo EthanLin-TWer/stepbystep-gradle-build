@@ -20,9 +20,9 @@ public class InMemoryTodoService implements TodoService{
     }
 
     @Override
-    public int add(TodoItem todo) {
+    public TodoItem add(TodoItem todo) {
         this.todoList.add(todo);
-        return todo.getId();
+        return todo;
     }
 
     @Override
