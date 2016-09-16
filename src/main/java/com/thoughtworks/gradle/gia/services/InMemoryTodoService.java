@@ -32,6 +32,9 @@ public class InMemoryTodoService implements TodoService{
 
     @Override
     public void update(TodoItem todoItem) {
-
+        if (this.todoList.stream().anyMatch(todo -> todo.getId() == todoItem.getId())) {
+            this.todoList.stream().filter(todo -> todo.getId() == todoItem.getId()).findFirst()
+                    .get().name(todoItem.getName()).completed(todoItem.isCompleted());
+        }
     }
 }

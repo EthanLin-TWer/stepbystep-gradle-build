@@ -39,6 +39,15 @@ public class InMemoryTodoServiceTest {
 
     @Test
     public void should_update_item_details_when_call_update_method() throws Exception {
+        TodoItem originTodo = new TodoItem().id(1).name("setup gradle").completed(false);
+        int id = service.add(originTodo);
+        assertThat(service.findById(id).get().getId(), is(1));
 
+        TodoItem updatedTodo = new TodoItem().id(1).name("setup gradle").completed(true);
+        service.update(updatedTodo);
+
+        assertThat(service.findById(id).get().getId(), is(1));
+        assertThat(service.findById(id).get().getName(), is("setup gradle"));
+        assertThat(service.findById(id).get().isCompleted(), is(true));
     }
 }
