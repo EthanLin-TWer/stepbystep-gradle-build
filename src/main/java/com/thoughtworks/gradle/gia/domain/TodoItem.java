@@ -18,7 +18,7 @@ public class TodoItem implements Comparable<TodoItem> {
         return name;
     }
 
-    public TodoItem name(String name) {
+    public TodoItem setName(String name) {
         this.name = name;
         return this;
     }
@@ -27,7 +27,7 @@ public class TodoItem implements Comparable<TodoItem> {
         return completed;
     }
 
-    public TodoItem completed(boolean completed) {
+    public TodoItem setCompleted(boolean completed) {
         this.completed = completed;
         return this;
     }

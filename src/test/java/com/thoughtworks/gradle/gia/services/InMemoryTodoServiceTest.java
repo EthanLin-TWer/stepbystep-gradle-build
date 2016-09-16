@@ -20,14 +20,14 @@ public class InMemoryTodoServiceTest {
 
     @Test
     public void should_add_another_item_when_call_add_method() throws Exception {
-        TodoItem added = service.add(new TodoItem().id(2).name("setup intellij").completed(true));
+        TodoItem added = service.add(new TodoItem().id(2).setName("setup intellij").setCompleted(true));
 
         assertThat(added.getId(), is(2));
     }
 
     @Test
     public void should_get_item_with_id_1_when_call_findById_method() throws Exception {
-        TodoItem added = service.add(new TodoItem().id(1).name("setup gradle").completed(false));
+        TodoItem added = service.add(new TodoItem().id(1).setName("setup gradle").setCompleted(false));
 
         Optional<TodoItem> setupGradle = service.findById(added.getId());
 
@@ -39,10 +39,10 @@ public class InMemoryTodoServiceTest {
 
     @Test
     public void should_update_item_details_when_call_update_method() throws Exception {
-        TodoItem originTodo = service.add(new TodoItem().id(1).name("setup gradle").completed(false));
+        TodoItem originTodo = service.add(new TodoItem().id(1).setName("setup gradle").setCompleted(false));
         assertThat(service.findById(originTodo.getId()).get().getId(), is(1));
 
-        service.update(new TodoItem().id(1).name("setup gradle").completed(true));
+        service.update(new TodoItem().id(1).setName("setup gradle").setCompleted(true));
 
         assertThat(service.findById(1).get().getId(), is(1));
         assertThat(service.findById(1).get().getName(), is("setup gradle"));
