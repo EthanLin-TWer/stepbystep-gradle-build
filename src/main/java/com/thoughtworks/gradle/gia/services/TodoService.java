@@ -7,8 +7,8 @@ import java.util.Optional;
 
 public interface TodoService {
     List<TodoItem> findAll();
-    Optional<TodoItem> findById(long id);
-    long add(TodoItem todo);
+    Optional<TodoItem> findById(int id);
+    int add(TodoItem todo);
     void delete(TodoItem todoItem);
     void update(TodoItem todoItem);
 }

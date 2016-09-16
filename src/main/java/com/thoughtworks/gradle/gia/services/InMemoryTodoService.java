@@ -15,12 +15,12 @@ public class InMemoryTodoService implements TodoService{
     }
 
     @Override
-    public Optional<TodoItem> findById(long id) {
+    public Optional<TodoItem> findById(int id) {
         return todoList.stream().filter(todo -> todo.getId() == id).findFirst();
     }
 
     @Override
-    public long add(TodoItem todo) {
+    public int add(TodoItem todo) {
         this.todoList.add(todo);
         return todo.getId();
     }

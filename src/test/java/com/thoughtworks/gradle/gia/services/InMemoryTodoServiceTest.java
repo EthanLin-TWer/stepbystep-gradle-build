@@ -20,20 +20,25 @@ public class InMemoryTodoServiceTest {
 
     @Test
     public void should_add_another_item_when_call_add_method() throws Exception {
-        long id = service.add(new TodoItem().id(2).name("setup intellij").completed(true));
+        int id = service.add(new TodoItem().id(2).name("setup intellij").completed(true));
 
-        assertThat(id, is(2L));
+        assertThat(id, is(2));
     }
 
     @Test
     public void should_get_item_with_id_1_when_call_findById_method() throws Exception {
-        long id = service.add(new TodoItem().id(1).name("setup gradle").completed(false));
+        int id = service.add(new TodoItem().id(1).name("setup gradle").completed(false));
 
         Optional<TodoItem> setupGradle = service.findById(id);
 
         assertThat(setupGradle.isPresent(), is(true));
-        assertThat(setupGradle.get().getId(), is(1L));
+        assertThat(setupGradle.get().getId(), is(1));
         assertThat(setupGradle.get().getName(), is("setup gradle"));
         assertThat(setupGradle.get().isCompleted(), is(false));
+    }
+
+    @Test
+    public void should_update_item_details_when_call_update_method() throws Exception {
+
     }
 }
