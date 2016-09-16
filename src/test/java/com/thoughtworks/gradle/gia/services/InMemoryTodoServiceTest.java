@@ -15,16 +15,11 @@ public class InMemoryTodoServiceTest {
     public void setUp() throws Exception {
         service = new InMemoryTodoService();
     }
-
-    @Test
-    public void should_add_one_item_when_call_add_method() throws Exception {
-        long id = service.add(new TodoItem().id(1).name("setup gradle").completed(false));
-
-        assertThat(id, is(1L));
-    }
-
+    
     @Test
     public void should_add_another_item_when_call_add_method() throws Exception {
-        
+        long id = service.add(new TodoItem().id(2).name("setup intellij").completed(true));
+
+        assertThat(id, is(2L));
     }
 }

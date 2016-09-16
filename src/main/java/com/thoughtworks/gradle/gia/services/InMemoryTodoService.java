@@ -2,9 +2,12 @@ package com.thoughtworks.gradle.gia.services;
 
 import com.thoughtworks.gradle.gia.domain.TodoItem;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class InMemoryTodoService implements TodoService{
+    private List<TodoItem> todoList = new ArrayList<>();
+
     @Override
     public List<TodoItem> findAll() {
         return null;
@@ -17,7 +20,8 @@ public class InMemoryTodoService implements TodoService{
 
     @Override
     public long add(TodoItem todo) {
-        return 1;
+        this.todoList.add(todo);
+        return todo.getId();
     }
 
     @Override
