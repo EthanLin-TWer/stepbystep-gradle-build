@@ -4,6 +4,7 @@ import com.thoughtworks.gradle.gia.domain.TodoItem;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 public class InMemoryTodoService implements TodoService{
     private List<TodoItem> todoList = new ArrayList<>();
@@ -14,8 +15,8 @@ public class InMemoryTodoService implements TodoService{
     }
 
     @Override
-    public TodoItem findById(String id) {
-        return null;
+    public Optional<TodoItem> findById(long id) {
+        return todoList.stream().filter(todo -> todo.getId() == id).findFirst();
     }
 
     @Override
