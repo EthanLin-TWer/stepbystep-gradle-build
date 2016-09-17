@@ -6,6 +6,7 @@ import org.junit.jupiter.api.Test;
 
 import java.util.Optional;
 
+import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class InMemoryTodoServiceTest {
@@ -38,13 +39,14 @@ public class InMemoryTodoServiceTest {
     @Test
     public void should_update_item_details_when_call_update_method() throws Exception {
         TodoItem originTodo = service.add(new TodoItem().id(1).setName("setup gradle").setCompleted(false));
-        assertEquals(service.findById(originTodo.getId()).get().getId(), 1);
+        assertEquals(originTodo.getId(), 1);
 
         TodoItem updatedTodo = service.update(new TodoItem().id(1).setName("setup gradle").setCompleted(true));
 
-        assertEquals(updatedTodo.getId(), 1);
-        assertEquals(updatedTodo.getName(), "setup gradle");
-        assertEquals(updatedTodo.isCompleted(), true);
+        assertAll("updatedTodo",
+                () -> assertEquals(updatedTodo.getId(), 1),
+                () -> assertEquals(updatedTodo.getName(), "setup gradle"),
+                () -> assertEquals(updatedTodo.isCompleted(), true));
     }
 
     @Test
