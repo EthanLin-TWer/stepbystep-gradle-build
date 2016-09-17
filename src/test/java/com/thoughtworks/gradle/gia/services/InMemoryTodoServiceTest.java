@@ -1,6 +1,7 @@
 package com.thoughtworks.gradle.gia.services;
 
 import com.thoughtworks.gradle.gia.domain.TodoItem;
+import com.thoughtworks.gradle.gia.exceptions.UpdatingItemNotExistException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -8,6 +9,7 @@ import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public class InMemoryTodoServiceTest {
     private InMemoryTodoService service;
@@ -25,6 +27,7 @@ public class InMemoryTodoServiceTest {
     }
 
     @Test
+    @SuppressWarnings("OptionalGetWithoutIsPresent")
     public void should_get_item_with_id_1_when_call_findById_method() throws Exception {
         TodoItem added = service.add(new TodoItem().id(1).setName("setup gradle").setCompleted(false));
 
@@ -50,6 +53,8 @@ public class InMemoryTodoServiceTest {
 
     @Test
     public void should_throw_exception_when_updating_unexisting_item() throws Exception {
+        service.add(new TodoItem().id(1).setName("setup gradle").setCompleted(false));
 
+        assertThrows(UpdatingItemNotExistException.class, () -> service.update(new TodoItem().id(2)));
     }
 }

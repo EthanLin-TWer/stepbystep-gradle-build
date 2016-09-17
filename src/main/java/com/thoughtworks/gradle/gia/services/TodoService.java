@@ -1,6 +1,7 @@
 package com.thoughtworks.gradle.gia.services;
 
 import com.thoughtworks.gradle.gia.domain.TodoItem;
+import com.thoughtworks.gradle.gia.exceptions.UpdatingItemNotExistException;
 
 import java.util.List;
 import java.util.Optional;
@@ -10,5 +11,5 @@ public interface TodoService {
     Optional<TodoItem> findById(int id);
     TodoItem add(TodoItem todo);
     void delete(TodoItem todoItem);
-    TodoItem update(TodoItem todoItem);
+    TodoItem update(TodoItem todoItem) throws UpdatingItemNotExistException;
 }

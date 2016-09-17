@@ -1,6 +1,7 @@
 package com.thoughtworks.gradle.gia.services;
 
 import com.thoughtworks.gradle.gia.domain.TodoItem;
+import com.thoughtworks.gradle.gia.exceptions.UpdatingItemNotExistException;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -31,11 +32,11 @@ public class InMemoryTodoService implements TodoService{
     }
 
     @Override
-    public TodoItem update(TodoItem todoItem) {
+    public TodoItem update(TodoItem todoItem) throws UpdatingItemNotExistException {
         Optional<TodoItem> itemWithSameId = this.todoList.stream().filter(todo -> todo.getId() == todoItem.getId()).findFirst();
         if (itemWithSameId.isPresent()) {
             return itemWithSameId.get().setName(todoItem.getName()).setCompleted(todoItem.isCompleted());
         }
-        return todoItem;
+        throw new UpdatingItemNotExistException();
     }
 }
