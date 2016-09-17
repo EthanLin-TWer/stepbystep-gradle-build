@@ -31,8 +31,7 @@ public class InMemoryTodoServiceTest {
         Optional<TodoItem> setupGradle = service.findById(added.getId());
 
         assertEquals(setupGradle.isPresent(), true);
-        assertAll("setupGradle",
-                () -> assertEquals(setupGradle.get().getId(), 1),
+        assertAll(() -> assertEquals(setupGradle.get().getId(), 1),
                 () -> assertEquals(setupGradle.get().getName(), "setup gradle"),
                 () -> assertEquals(setupGradle.get().isCompleted(), false));
     }
@@ -44,8 +43,7 @@ public class InMemoryTodoServiceTest {
 
         TodoItem updatedTodo = service.update(new TodoItem().id(1).setName("setup gradle").setCompleted(true));
 
-        assertAll("updatedTodo",
-                () -> assertEquals(updatedTodo.getId(), 1),
+        assertAll(() -> assertEquals(updatedTodo.getId(), 1),
                 () -> assertEquals(updatedTodo.getName(), "setup gradle"),
                 () -> assertEquals(updatedTodo.isCompleted(), true));
     }
