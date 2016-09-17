@@ -3,13 +3,12 @@ package com.thoughtworks.gradle.gia.services;
 import com.thoughtworks.gradle.gia.domain.TodoItem;
 import com.thoughtworks.gradle.gia.exceptions.UpdatingItemNotExistException;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
 import java.util.Optional;
 
-import static org.junit.jupiter.api.Assertions.assertAll;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class InMemoryTodoServiceTest {
     private InMemoryTodoService service;
@@ -26,35 +25,37 @@ public class InMemoryTodoServiceTest {
         assertEquals(added.getId(), 2);
     }
 
-    @Test
-    @SuppressWarnings("OptionalGetWithoutIsPresent")
-    public void should_get_item_with_id_1_when_call_findById_method() throws Exception {
-        TodoItem added = service.add(new TodoItem().id(1).setName("setup gradle").setCompleted(false));
+    @Nested
+    class AfterSomeDataPopulated {
+        @BeforeEach
+        void prePopulateWithTwoTodoItems() {
+            service.add(new TodoItem().id(1).setName("setup gradle").setCompleted(false));
+            service.add(new TodoItem().id(2).setName("setup intellij").setCompleted(true));
+        }
 
-        Optional<TodoItem> setupGradle = service.findById(added.getId());
+        @Test
+        @SuppressWarnings("OptionalGetWithoutIsPresent")
+        void should_set_item_with_id_1_when_call_findById_method_with_id_1() throws Exception {
+            Optional<TodoItem> todoItem = service.findById(1);
 
-        assertEquals(setupGradle.isPresent(), true);
-        assertAll(() -> assertEquals(setupGradle.get().getId(), 1),
-                () -> assertEquals(setupGradle.get().getName(), "setup gradle"),
-                () -> assertEquals(setupGradle.get().isCompleted(), false));
-    }
+            assertEquals(todoItem.isPresent(), true);
+            assertAll(() -> assertEquals(todoItem.get().getId(), 1),
+                    () -> assertEquals(todoItem.get().getName(), "setup gradle"),
+                    () -> assertEquals(todoItem.get().isCompleted(), false));
+        }
 
-    @Test
-    public void should_update_item_details_when_call_update_method() throws Exception {
-        TodoItem originTodo = service.add(new TodoItem().id(1).setName("setup gradle").setCompleted(false));
-        assertEquals(originTodo.getId(), 1);
+        @Test
+        void should_update_item_details_when_call_update_method_with_id_1() throws Exception {
+            TodoItem updatedTodo = service.update(new TodoItem().id(1).setName("setup maven").setCompleted(true));
 
-        TodoItem updatedTodo = service.update(new TodoItem().id(1).setName("setup gradle").setCompleted(true));
+            assertAll(() -> assertEquals(updatedTodo.getId(), 1),
+                    () -> assertEquals(updatedTodo.getName(), "setup maven"),
+                    () -> assertEquals(updatedTodo.isCompleted(), true));
+        }
 
-        assertAll(() -> assertEquals(updatedTodo.getId(), 1),
-                () -> assertEquals(updatedTodo.getName(), "setup gradle"),
-                () -> assertEquals(updatedTodo.isCompleted(), true));
-    }
-
-    @Test
-    public void should_throw_exception_when_updating_unexisting_item() throws Exception {
-        service.add(new TodoItem().id(1).setName("setup gradle").setCompleted(false));
-
-        assertThrows(UpdatingItemNotExistException.class, () -> service.update(new TodoItem().id(2)));
+        @Test
+        void should_throw_exception_when_trying_to_update_an_unexisting_item() {
+            assertThrows(UpdatingItemNotExistException.class, () -> service.update(new TodoItem().id(3)));
+        }
     }
 }
